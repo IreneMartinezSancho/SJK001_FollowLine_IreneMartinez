@@ -173,27 +173,27 @@ Las imágenes permiten observar el comportamiento del vehículo con diferentes v
 #### P-00 - Velocidad 10, Kp = 0.1
 En la primera prueba, el coche consigue avanzar por el circuito, pero termina saliéndose en la tercera curva. Esta configuración no permite completar el recorrido.
 
-![Prueba P-00 - Captura 1](imgs_P/p00-0.png)
+![Prueba P-00 - Captura 1](imgsP/p00-0.png)
 
-![Prueba P-00 - Captura 2](imgs_P/p00-1.png)
+![Prueba P-00 - Captura 2](imgsP/p00-1.png)
 
 #### P-01 - Velocidad 2, Kp = 0.1
 El coche consigue completar el circuito en **294 segundos**. Sigue la línea roja con bastante precisión y apenas presenta oscilaciones, aunque el tiempo de vuelta es demasiado elevado.
 
-![Prueba P-01 - Captura 1](imgs_P/p01-0.png)
+![Prueba P-01 - Captura 1](imgsP/p01-0.png)
 
-![Prueba P-01 - Captura 2](imgs_P/p01-1.png)
+![Prueba P-01 - Captura 2](imgsP/p01-1.png)
 
-![Prueba P-01 - Captura 3](imgs_P/p01-2.png)
+![Prueba P-01 - Captura 3](imgsP/p01-2.png)
 
 #### P-02 - Velocidad 5, Kp = 0.1
 Al aumentar la velocidad, el tiempo de vuelta se reduce a **113 segundos**. El coche se comporta relativamente bien en las rectas, pero empieza a oscilar cuando llega a las curvas.
 
-![Prueba P-02 - Captura 1](imgs_P/p02-0.png)
+![Prueba P-02 - Captura 1](imgsP/p02-0.png)
 
-![Prueba P-02 - Captura 2](imgs_P/p02-1.png)
+![Prueba P-02 - Captura 2](imgsP/p02-1.png)
 
-![Prueba P-02 - Captura 3](imgs_P/p02-2.png)
+![Prueba P-02 - Captura 3](imgsP/p02-2.png)
 
 #### P-03 - Velocidad 5, Kp = 0.005
 
@@ -201,17 +201,17 @@ Se reduce la ganancia proporcional para intentar conseguir correcciones más sua
 
 El coche completa el circuito en **109 segundos**. Aunque parece oscilar algo menos después de volver hacia la línea, al entrar en algunas curvas se desvía bastante. Por tanto, no se observa una mejora clara respecto a la prueba anterior.
 
-![Prueba P-03 - Captura 1](imgs_P/p03-0.png)
+![Prueba P-03 - Captura 1](imgsP/p03-0.png)
 
-![Prueba P-03 - Captura 2](imgs_P/p03-1.png)
+![Prueba P-03 - Captura 2](imgsP/p03-1.png)
 
-![Prueba P-03 - Captura 3](imgs_P/p03-2.png)
+![Prueba P-03 - Captura 3](imgsP/p03-2.png)
 
 #### P-04 - Velocidad 7, Kp = 0.01
 
 Se prueba una velocidad superior, pero el coche no consigue realizar correctamente la primera curva. La trayectoria es prácticamente recta y termina saliéndose de la carretera.
 
-![Prueba P-04 - Captura](imgs_P/p04-0.png)
+![Prueba P-04 - Captura](imgsP/p04-0.png)
 
 #### P-05 - Velocidad 6, Kp = 0.01
 
@@ -219,9 +219,9 @@ En esta última prueba se consigue completar el circuito en **96 segundos**, sie
 
 Sin embargo, el coche presenta oscilaciones muy grandes, incluso en las rectas. Aunque consigue completar el recorrido, todavía es necesario mejorar la estabilidad.
 
-![Prueba P-05 - Captura 1](imgs_P/p05-0.png)
+![Prueba P-05 - Captura 1](imgsP/p05-0.png)
 
-![Prueba P-05 - Captura 2](imgs_P/p05-1.png)
+![Prueba P-05 - Captura 2](imgsP/p05-1.png)
 
 #### Resumen
 
