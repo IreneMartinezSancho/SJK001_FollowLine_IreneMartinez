@@ -370,3 +370,201 @@ En esta última configuración se consigue el mejor tiempo del controlador PD, c
 
 Las capturas complementan los resultados de las pruebas y permiten documentar cómo se ha ido ajustando el controlador hasta encontrar una configuración con una estabilidad mejorada y otra con un tiempo de vuelta inferior.
 
+## 6. Controlador proporcional-integral-derivativo (PID)
+Después de probar los controladores P y PD, se ha implementado un controlador PID para comprobar si la incorporación de la parte integral permite mejorar el seguimiento de la línea roja.
+Este controlador combina tres componentes:
+- **Proporcional (P):** corrige la dirección según la distancia entre el centro de la imagen y la línea roja.
+- **Integral (I):** acumula los errores de las iteraciones anteriores para intentar corregir desviaciones que se mantienen durante más tiempo.
+- **Derivativo (D):** tiene en cuenta cómo está cambiando el error para intentar reducir las oscilaciones.
+
+La expresión del controlador es:
+**w = Kp · error + Ki · integral + Kd · derivada**
+
+En el código, la parte integral se calcula acumulando los errores:
+```python
+error_acumulado += err
+I = Ki * error_acumulado
+```
+
+Además, se establece un límite para evitar que el error acumulado crezca demasiado y provoque correcciones excesivas. Esta medida ayuda a reducir el problema conocido como *integral windup*.
+Al igual que en el controlador PD, se utiliza una implementación discreta simplificada, en la que los errores se acumulan y se comparan entre iteraciones, sin utilizar directamente el tiempo transcurrido.
+Finalmente, se suman los tres componentes para calcular la velocidad angular:
+
+```python
+P = Kp * err
+I = Ki * error_acumulado
+D = Kd * derivada
+
+HAL.setW(P + I + D)
+```
+El objetivo de estas pruebas ha sido encontrar diferentes configuraciones: una que permita seguir la línea de forma estable y otras que consigan completar el circuito más rápidamente, aunque presenten mayores oscilaciones.
+
+### 6.1. Pruebas realizadas
+Se han seleccionado tres configuraciones principales, aumentando progresivamente la velocidad para comprobar cómo afecta al comportamiento del coche.
+
+| Prueba | Velocidad | Kp | Ki | Kd | Tiempo |
+|---|---:|---:|---:|---:|---:|
+| PID-00 | 6 | 0.01 | 0.001 | 0.05 | 90,43 s |
+| PID-01 | 8 | 0.01 | 0.001 | 0.05 | 64,86 s |
+| PID-02 | 10 | 0.01 | 0.0001 | 0.5 | 53,46 s |
+
+Posteriormente, durante los ajustes de la configuración rápida, también se registró un tiempo de **52,86 segundos**, el menor de toda la práctica. La combinación exacta de ganancias de esa ejecución queda pendiente de verificar con el código guardado.
+
+También se realizaron dos comprobaciones adicionales con velocidad 10 y diferentes ganancias derivativas:
+| Configuración adicional | Kd | Resultado |
+|---|---:|---|
+| Velocidad 10, Kp = 0.01, Ki = 0.0001 | 0.2 | No completa el circuito |
+| Velocidad 10, Kp = 0.01, Ki = 0.0001 | 0.4 | 57,92 s, oscilaciones elevadas |
+
+Estas pruebas adicionales permiten observar cómo cambia el comportamiento del coche cuando se modifica la parte derivativa.
+
+### 6.2. Análisis de los resultados
+**PID-00 — Velocidad 6: priorizando la estabilidad**
+
+En la primera configuración se utiliza una velocidad de 6, con `Kp = 0.01`, `Ki = 0.001` y `Kd = 0.05`.
+El coche consigue completar el circuito en 90,43 segundos y sigue bastante bien la línea roja, prácticamente sin oscilaciones.
+El comportamiento es muy estable y las correcciones de dirección son bastante suaves. Sin embargo, el tiempo de vuelta es relativamente elevado en comparación con las configuraciones de mayor velocidad.
+
+Esta prueba resulta interesante porque demuestra que se puede conseguir un seguimiento preciso de la línea sin necesidad de que el coche realice movimientos bruscos continuamente.
+Por tanto, se considera la **configuración más estable y controlada de las pruebas PID realizadas**.
+
+**PID-01 — Velocidad 8: buscando un equilibrio**
+En la segunda configuración se aumenta la velocidad hasta 8, manteniendo los mismos valores de `Kp`, `Ki` y `Kd`.
+El coche consigue completar el circuito en 64,86 segundos, reduciendo considerablemente el tiempo respecto a la primera prueba.
+Sin embargo, al aumentar la velocidad también aparecen más oscilaciones. Aunque sigue siendo capaz de completar el recorrido, necesita realizar correcciones laterales más frecuentes.
+Esta configuración representa una alternativa intermedia entre la estabilidad del primer PID y la velocidad que se busca conseguir en la práctica.
+
+**PID-02 — Velocidad 10: priorizando el tiempo**
+En esta prueba se aumenta la velocidad hasta 10, utilizando `Kp = 0.01`, `Ki = 0.0001` y `Kd = 0.5`.
+El coche consigue completar el circuito en 53,46 segundos, mejorando bastante los resultados anteriores.
+Sin embargo, el comportamiento es mucho menos estable. Durante el recorrido se producen oscilaciones muy pronunciadas y el vehículo se desplaza continuamente de un lado a otro de la línea.
+Aunque consigue mantenerse dentro del circuito y completar la vuelta, la trayectoria no es especialmente precisa.
+Durante los ajustes posteriores también se registró un tiempo de 52,86 segundos, el mejor obtenido en toda la práctica.
+Por tanto, las configuraciones rápidas han permitido reducir considerablemente el tiempo de vuelta, pero a cambio de una mayor inestabilidad.
+
+**Ajustes adicionales de la ganancia derivativa**
+Para comprobar si se podían reducir las oscilaciones a velocidad 10, se modificó la ganancia derivativa.
+Con `Kd = 0.2`, el coche terminó saliéndose del circuito, por lo que esta configuración no resultó adecuada.
+Posteriormente se probó `Kd = 0.4`, obteniendo un tiempo de 57,92 segundos. El coche consiguió completar el recorrido, pero continuó presentando muchas oscilaciones.
+Estos resultados muestran que modificar la ganancia derivativa puede afectar considerablemente al comportamiento del vehículo, aunque no siempre se consigue una mejora.
+
+### 6.3. Conclusiones del controlador PID
+Después de realizar las pruebas, se observa que el controlador PID permite completar el circuito con diferentes configuraciones, dependiendo de si se da más importancia a la estabilidad o a la velocidad.
+La primera configuración, con velocidad 6, consigue seguir la línea roja de forma bastante precisa y con muy pocas oscilaciones. Aunque su tiempo de 90,43 segundos no es el mejor, ofrece un comportamiento más controlado.
+Al aumentar la velocidad a 8, el tiempo se reduce considerablemente hasta 64,86 segundos, aunque aparecen mayores oscilaciones.
+Finalmente, con velocidad 10 se consiguen tiempos próximos a 53 segundos, llegando a registrar un mínimo de 52,86 segundos. Sin embargo, el coche realiza movimientos laterales mucho más bruscos y se aleja con mayor frecuencia de la línea roja.
+Por tanto, en estas pruebas **la configuración más rápida no es la más estable**.
+También se ha comprobado que reducir la ganancia derivativa no siempre mejora el comportamiento. Algunos ajustes han provocado que el coche se salga del circuito o que continúe oscilando demasiado.
+En general, el PID ha permitido conseguir tiempos inferiores a los obtenidos anteriormente con P y PD, aunque esto también se debe a que se han probado velocidades más elevadas. No se puede atribuir toda la mejora únicamente al término integral.
+Como resultado, se mantienen dos configuraciones de referencia: una que prioriza el seguimiento preciso de la línea y otra que busca completar el circuito en el menor tiempo posible.
+
+### 6.4. Capturas de las pruebas
+A continuación se muestran las capturas realizadas durante las pruebas del controlador PID. Estas imágenes sirven para documentar las configuraciones utilizadas y los resultados obtenidos.
+
+#### PID-00 — Velocidad 6: configuración estable
+En esta primera prueba, el coche completa el circuito en 90,43 segundos, siguiendo la línea roja con bastante precisión y prácticamente sin oscilaciones.
+
+![PID-00 - Configuración estable](imgPID/pid00.png)
+
+#### PID-01 — Velocidad 8: configuración intermedia
+
+Al aumentar la velocidad hasta 8, el tiempo se reduce a 64,86 segundos, aunque el coche comienza a realizar más correcciones laterales.
+
+![PID-01 - Configuración intermedia](imgPID/pid01.png)
+
+#### PID-02 — Velocidad 10: configuración rápida
+
+Esta configuración permite completar el circuito en 53,46 segundos, aunque con oscilaciones mucho más pronunciadas. Durante la optimización también se consiguió registrar una vuelta de 52,86 segundos.
+
+![PID-02 - Configuración rápida](imgPID/pid02.png)
+
+#### Ajuste adicional — Kd = 0.4
+En esta prueba se modifica la ganancia derivativa para intentar reducir las oscilaciones a velocidad 10.
+El coche completa el recorrido en 57,92 segundos, pero continúa mostrando un comportamiento bastante inestable.
+
+![PID - Ajuste adicional de Kd](imgPID/pid03.png)
+
+Las capturas permiten complementar los tiempos registrados y mostrar las diferencias de comportamiento entre las distintas configuraciones.
+---
+
+## 7. Comparación final de los controladores
+Una vez realizadas las pruebas con P, PD y PID, se pueden comparar los resultados obtenidos y analizar cómo ha ido evolucionando el comportamiento del coche.
+
+### 7.1. Comparación de tiempos
+La siguiente tabla recoge el menor tiempo registrado con cada tipo de controlador.
+
+| Controlador | Velocidad | Mejor tiempo | Observaciones |
+|---|---:|---:|---|
+| P | 6 | 96 s | Oscilaciones muy elevadas |
+| PD | 7 | 85,65 s | Más estable que algunas configuraciones P, pero sigue oscilando |
+| PID | 10 | 52,86 s | Mejor tiempo registrado, con oscilaciones muy pronunciadas |
+
+A lo largo de la práctica se ha pasado de completar el circuito en 96 segundos con el controlador P a conseguir una vuelta de 52,86 segundos durante la fase PID.
+Esto supone una reducción aproximada del **45 % del tiempo de vuelta** respecto al mejor resultado obtenido con P.
+Sin embargo, hay que tener en cuenta que las configuraciones utilizan velocidades y ganancias diferentes. Por tanto, la mejora no se debe exclusivamente al tipo de controlador, sino también al ajuste de sus parámetros y al aumento de la velocidad.
+
+### 7.2. Comparación del comportamiento
+**Controlador P**
+Ha permitido comprender el funcionamiento básico del seguimiento de línea y comprobar cómo influye la ganancia proporcional en las correcciones de dirección.
+A velocidades bajas, el coche sigue bastante bien la línea, pero al aumentar la velocidad aparecen oscilaciones importantes y existe mayor riesgo de salirse del circuito.
+
+**Controlador PD**
+La incorporación del término derivativo ha permitido reducir las oscilaciones en algunas configuraciones.
+El valor `Kd = 0.05` ha ofrecido los mejores resultados de estabilidad de las pruebas PD, permitiendo completar el circuito en 89,11 segundos a velocidad 6.
+También se ha conseguido mejorar el tiempo hasta 85,65 segundos aumentando la velocidad a 7, aunque con mayores oscilaciones.
+
+**Controlador PID**
+Con el PID se han conseguido los tiempos más bajos de toda la práctica.
+La configuración de velocidad 6 ha presentado un comportamiento muy estable, mientras que las configuraciones de mayor velocidad han permitido reducir considerablemente el tiempo de vuelta.
+Sin embargo, las pruebas no demuestran que añadir el término integral sea siempre mejor. Su efecto depende de los valores elegidos y de las condiciones de funcionamiento del coche.
+
+### 7.3. Selección de las configuraciones finales
+Después de comparar los resultados, se han seleccionado dos configuraciones de referencia según el objetivo que se quiera priorizar.
+
+**Configuración más estable**
+- Controlador: PID.
+- Velocidad: 6.
+- Kp: 0.01.
+- Ki: 0.001.
+- Kd: 0.05.
+- Tiempo: 90,43 segundos.
+
+Esta configuración destaca por seguir la línea roja de forma bastante precisa y presentar muy pocas oscilaciones.
+Se considera la opción más adecuada si se prioriza la estabilidad y el seguimiento de la línea frente al tiempo de vuelta.
+
+**Configuración más rápida**
+La mejor vuelta registrada durante la fase PID ha sido de **52,86 segundos**, utilizando una configuración de velocidad elevada.
+El resultado demuestra que es posible completar el circuito en bastante menos tiempo, aunque con mayores oscilaciones y una trayectoria menos controlada.
+La configuración rápida documentada con todos sus parámetros es:
+- Controlador: PID.
+- Velocidad: 10.
+- Kp: 0.01.
+- Ki: 0.0001.
+- Kd: 0.5.
+- Tiempo registrado con esta combinación: 53,46 segundos.
+
+En este caso, se prioriza la velocidad, aceptando mayores desviaciones respecto a la línea roja.
+Aunque consigue completar el circuito, no presenta la misma estabilidad que la configuración de velocidad 6.
+
+---
+
+## 8. Conclusiones finales
+El desarrollo de esta práctica ha permitido comprobar cómo influyen los diferentes controladores y sus parámetros en el comportamiento de un coche autónomo que debe seguir una línea roja.
+Al comenzar, se utilizó un controlador proporcional sencillo, con el que se consiguió completar el recorrido, pero aparecieron dificultades al aumentar la velocidad. El coche empezaba a oscilar demasiado e incluso llegaba a salirse en algunas curvas.
+Posteriormente, al incorporar el término derivativo mediante el controlador PD, se consiguió mejorar la estabilidad en determinadas configuraciones. Las pruebas también permitieron comprobar que aumentar `Kd` no garantiza un mejor resultado, ya que una corrección demasiado elevada puede producir movimientos bruscos.
+Finalmente, se implementó un controlador PID, añadiendo la parte integral para tener en cuenta los errores acumulados. Con este controlador se consiguieron los tiempos más bajos de la práctica, aunque también se observó que aumentar la velocidad provoca mayores oscilaciones.
+
+Una de las conclusiones más importantes es que **no existe una única configuración que sea la mejor en todos los aspectos**. Una velocidad baja facilita seguir la línea con precisión, mientras que una velocidad elevada permite reducir el tiempo de vuelta, pero hace más difícil mantener una trayectoria estable.
+
+También se ha comprobado que los valores de las ganancias deben ajustarse experimentalmente. Un cambio que parece pequeño puede modificar bastante el comportamiento del coche, y no siempre aumentar o reducir un parámetro produce el resultado esperado.
+
+En cuanto al rendimiento, se ha conseguido pasar de los 96 segundos del mejor controlador P a un mínimo de 52,86 segundos durante la fase PID. Esto representa una mejora importante en el tiempo de vuelta, aunque se ha conseguido a costa de una mayor inestabilidad y utilizando una velocidad superior.
+
+Por otra parte, se ha obtenido una configuración PID a velocidad 6 que sigue la línea prácticamente sin oscilaciones, lo que demuestra que también es posible priorizar la precisión del recorrido.
+
+Como posible mejora futura, sería interesante implementar un sistema de velocidad adaptativa, que permita acelerar en las rectas y reducir la velocidad antes de llegar a las curvas. También se podría mejorar la detección de la línea utilizando regiones concretas de la imagen, en lugar de analizarla completa.
+
+Esta práctica ha servido para comprender mejor el funcionamiento de los controladores P, PD y PID, así como la importancia de ajustar sus parámetros y encontrar un equilibrio entre velocidad, precisión y estabilidad.
+
+**Mejor tiempo registrado: 52,86 segundos.**
+
