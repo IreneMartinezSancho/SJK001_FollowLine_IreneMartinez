@@ -406,7 +406,7 @@ Se han seleccionado tres configuraciones principales, aumentando progresivamente
 |---|---:|---:|---:|---:|---:|
 | PID-00 | 6 | 0.01 | 0.001 | 0.05 | 90,43 s |
 | PID-01 | 8 | 0.01 | 0.001 | 0.05 | 64,86 s |
-| PID-02 | 10 | 0.01 | 0.0001 | 0.5 | 53,46 s |
+| PID-02 | 10 | 0.01 | 0.0001 | 0.05 | 53,46 s |
 
 Posteriormente, durante los ajustes de la configuración rápida, también se registró un tiempo de **52,86 segundos**, el menor de toda la práctica. La combinación exacta de ganancias de esa ejecución queda pendiente de verificar con el código guardado.
 
@@ -435,7 +435,7 @@ Sin embargo, al aumentar la velocidad también aparecen más oscilaciones. Aunqu
 Esta configuración representa una alternativa intermedia entre la estabilidad del primer PID y la velocidad que se busca conseguir en la práctica.
 
 **PID-02 — Velocidad 10: priorizando el tiempo**
-En esta prueba se aumenta la velocidad hasta 10, utilizando `Kp = 0.01`, `Ki = 0.0001` y `Kd = 0.5`.
+En esta prueba se aumenta la velocidad hasta 10, utilizando `Kp = 0.01`, `Ki = 0.0001` y `Kd = 0.05`.
 El coche consigue completar el circuito en 53,46 segundos, mejorando bastante los resultados anteriores.
 Sin embargo, el comportamiento es mucho menos estable. Durante el recorrido se producen oscilaciones muy pronunciadas y el vehículo se desplaza continuamente de un lado a otro de la línea.
 Aunque consigue mantenerse dentro del circuito y completar la vuelta, la trayectoria no es especialmente precisa.
@@ -444,8 +444,8 @@ Por tanto, las configuraciones rápidas han permitido reducir considerablemente 
 
 **Ajustes adicionales de la ganancia derivativa**
 Para comprobar si se podían reducir las oscilaciones a velocidad 10, se modificó la ganancia derivativa.
-Con `Kd = 0.2`, el coche terminó saliéndose del circuito, por lo que esta configuración no resultó adecuada.
-Posteriormente se probó `Kd = 0.4`, obteniendo un tiempo de 57,92 segundos. El coche consiguió completar el recorrido, pero continuó presentando muchas oscilaciones.
+Con `Kd = 0.02`, el coche terminó saliéndose del circuito, por lo que esta configuración no resultó adecuada.
+Posteriormente se probó `Kd = 0.04`, obteniendo un tiempo de 57,92 segundos. El coche consiguió completar el recorrido, pero continuó presentando muchas oscilaciones.
 Estos resultados muestran que modificar la ganancia derivativa puede afectar considerablemente al comportamiento del vehículo, aunque no siempre se consigue una mejora.
 
 ### 6.3. Conclusiones del controlador PID
@@ -478,7 +478,7 @@ Esta configuración permite completar el circuito en 53,46 segundos, aunque con 
 
 ![PID-02 - Configuración rápida](imgsPID/pid02.png)
 
-#### Ajuste adicional - Kd = 0.4
+#### Ajuste adicional - Kd = 0.04
 En esta prueba se modifica la ganancia derivativa para intentar reducir las oscilaciones a velocidad 10.
 El coche completa el recorrido en 57,92 segundos, pero continúa mostrando un comportamiento bastante inestable.
 
@@ -540,7 +540,7 @@ La configuración rápida documentada con todos sus parámetros es:
 - Velocidad: 10.
 - Kp: 0.01.
 - Ki: 0.0001.
-- Kd: 0.5.
+- Kd: 0.05.
 - Tiempo registrado con esta combinación: 53,46 segundos.
 
 En este caso, se prioriza la velocidad, aceptando mayores desviaciones respecto a la línea roja.
