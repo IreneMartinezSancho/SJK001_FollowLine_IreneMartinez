@@ -7,7 +7,7 @@ import Frequency
 import cv2
 
 # Parámetros del controlador PID
-linearVelocity = 10
+linearVelocity = 8
 Kp = 0.01
 Ki = 0.0001
 Kd = 0.05
