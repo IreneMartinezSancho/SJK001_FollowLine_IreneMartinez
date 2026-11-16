@@ -163,3 +163,69 @@ El mejor tiempo registrado con el controlador P ha sido de **96 segundos**, util
 Sin embargo, esta configuración presenta muchas oscilaciones, por lo que no puede considerarse óptima en términos de estabilidad.
 
 Por este motivo, el siguiente paso será implementar un **controlador PD**, añadiendo un término derivativo para intentar reducir las oscilaciones sin perder demasiada velocidad.
+
+
+### 4.4. Capturas de las pruebas
+A continuación se muestran las capturas de los experimentos realizados con el controlador P. Se incluyen tanto las pruebas en las que el coche ha conseguido completar el circuito como aquellas en las que se ha salido de la carretera.
+
+Las imágenes permiten observar el comportamiento del vehículo con diferentes velocidades y ganancias proporcionales.
+
+#### P-00 - Velocidad 10, Kp = 0.1
+En la primera prueba, el coche consigue avanzar por el circuito, pero termina saliéndose en la tercera curva. Esta configuración no permite completar el recorrido.
+
+![Prueba P-00 - Captura 1](imgs_P/p00-0.png)
+
+![Prueba P-00 - Captura 2](imgs_P/p00-1.png)
+
+#### P-01 - Velocidad 2, Kp = 0.1
+El coche consigue completar el circuito en **294 segundos**. Sigue la línea roja con bastante precisión y apenas presenta oscilaciones, aunque el tiempo de vuelta es demasiado elevado.
+
+![Prueba P-01 - Captura 1](imgs_P/p01-0.png)
+
+![Prueba P-01 - Captura 2](imgs_P/p01-1.png)
+
+![Prueba P-01 - Captura 3](imgs_P/p01-2.png)
+
+#### P-02 - Velocidad 5, Kp = 0.1
+Al aumentar la velocidad, el tiempo de vuelta se reduce a **113 segundos**. El coche se comporta relativamente bien en las rectas, pero empieza a oscilar cuando llega a las curvas.
+
+![Prueba P-02 - Captura 1](imgs_P/p02-0.png)
+
+![Prueba P-02 - Captura 2](imgs_P/p02-1.png)
+
+![Prueba P-02 - Captura 3](imgs_P/p02-2.png)
+
+#### P-03 - Velocidad 5, Kp = 0.005
+
+Se reduce la ganancia proporcional para intentar conseguir correcciones más suaves.
+
+El coche completa el circuito en **109 segundos**. Aunque parece oscilar algo menos después de volver hacia la línea, al entrar en algunas curvas se desvía bastante. Por tanto, no se observa una mejora clara respecto a la prueba anterior.
+
+![Prueba P-03 - Captura 1](imgs_P/p03-0.png)
+
+![Prueba P-03 - Captura 2](imgs_P/p03-1.png)
+
+![Prueba P-03 - Captura 3](imgs_P/p03-2.png)
+
+#### P-04 - Velocidad 7, Kp = 0.01
+
+Se prueba una velocidad superior, pero el coche no consigue realizar correctamente la primera curva. La trayectoria es prácticamente recta y termina saliéndose de la carretera.
+
+![Prueba P-04 - Captura](imgs_P/p04-0.png)
+
+#### P-05 - Velocidad 6, Kp = 0.01
+
+En esta última prueba se consigue completar el circuito en **96 segundos**, siendo el mejor tiempo obtenido con el controlador P.
+
+Sin embargo, el coche presenta oscilaciones muy grandes, incluso en las rectas. Aunque consigue completar el recorrido, todavía es necesario mejorar la estabilidad.
+
+![Prueba P-05 - Captura 1](imgs_P/p05-0.png)
+
+![Prueba P-05 - Captura 2](imgs_P/p05-1.png)
+
+#### Resumen
+
+Las pruebas muestran cómo el aumento de velocidad permite reducir considerablemente el tiempo de vuelta, pero también hace que el vehículo tenga más dificultades para mantenerse cerca de la línea roja.
+
+La configuración P-05 consigue el menor tiempo, aunque sus oscilaciones son demasiado grandes. Por este motivo, en la siguiente fase se probará un controlador PD para intentar conseguir una trayectoria más estable sin perder velocidad.
+
