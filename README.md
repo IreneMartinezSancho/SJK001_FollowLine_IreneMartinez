@@ -327,47 +327,47 @@ A continuación se muestran las capturas realizadas durante los experimentos con
 
 #### PD-00 - Velocidad 6, Kp = 0.01, Kd = 0.01
 Primera prueba con el controlador PD. El coche completa el circuito en 94,47 segundos, aunque todavía presenta bastantes oscilaciones.
-![PD-00 - Captura 1](imgsPD/pd00-00.png)
+![PD-00 - Captura 1](imgPD/pd00-00.png)
 
-![PD-00 - Captura 2](imgsPD/pd00-01.png)
+![PD-00 - Captura 2](imgPD/pd00-01.png)
 
-![PD-00 - Captura 3](imgsPD/pd00-02.png)
+![PD-00 - Captura 3](imgPD/pd00-02.png)
 
 #### PD-01 — Velocidad 6, Kp = 0.01, Kd = 0.05
 Se observa una reducción considerable de las oscilaciones. Esta configuración ofrece la mejor estabilidad de las pruebas realizadas con PD, completando el circuito en 89,11 segundos.
 
-![PD-01 - Captura](imgsPD/pd01-00.png)
+![PD-01 - Captura](imgPD/pd01-00.png)
 
 #### PD-02 — Velocidad 6, Kp = 0.01, Kd = 0.1
 Al aumentar demasiado la ganancia derivativa, vuelven a aparecer oscilaciones pronunciadas, especialmente en las curvas. El tiempo de vuelta es de 93,58 segundos.
 
-![PD-02 - Captura 1](imgsPD/pd02-00.png)
+![PD-02 - Captura 1](imgPD/pd02-00.png)
 
-![PD-02 - Captura 2](imgsPD/pd02-01.png)
+![PD-02 - Captura 2](imgPD/pd02-01.png)
 
-![PD-02 - Captura 3](imgsPD/pd02-02.png)
+![PD-02 - Captura 3](imgPD/pd02-02.png)
 
 #### PD-03 - Velocidad 6, Kp = 0.01, Kd = 0.075
 El coche presenta menos oscilaciones que en PD-02, pero continúa siendo menos estable que en PD-01. Completa el circuito en 96,72 segundos.
 
-![PD-03 - Captura 1](imgsPD/pd03-00.png)
+![PD-03 - Captura 1](imgPD/pd03-00.png)
 
-![PD-03 - Captura 2](imgsPD/pd03-01.png)
+![PD-03 - Captura 2](imgPD/pd03-01.png)
 
 #### PD-04 — Velocidad 6, Kp = 0.01, Kd = 0.035
 Se prueba una ganancia derivativa inferior a 0.05, pero las oscilaciones vuelven a aumentar. El tiempo registrado es de 97,16 segundos.
 
-![PD-04 - Captura 1](imgsPD/pd04-00.png)
+![PD-04 - Captura 1](imgPD/pd04-00.png)
 
-![PD-04 - Captura 2](imgsPD/pd04-01.png)
+![PD-04 - Captura 2](imgPD/pd04-01.png)
 
 #### PD-05 — Velocidad 7, Kp = 0.01, Kd = 0.05
 
 En esta última configuración se consigue el mejor tiempo del controlador PD, con 85,65 segundos. El coche completa el circuito, aunque con mayores oscilaciones que a velocidad 6.
 
-![PD-05 - Captura 1](imgsPD/pd05-00.png)
+![PD-05 - Captura 1](imgPD/pd05-00.png)
 
-![PD-05 - Captura 2](imgsPD/pd05-01.png)
+![PD-05 - Captura 2](imgPD/pd05-01.png)
 
 Las capturas complementan los resultados de las pruebas y permiten documentar cómo se ha ido ajustando el controlador hasta encontrar una configuración con una estabilidad mejorada y otra con un tiempo de vuelta inferior.
 
