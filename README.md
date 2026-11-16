@@ -143,12 +143,12 @@ El coche completa la vuelta en 109 segundos.
 Al observarlo, se aprecia que al entrar en algunas curvas se aleja bastante de la línea, llegando a dar un bandazo más fuerte que en la prueba anterior. Después, cuando vuelve hacia la línea, parece que oscila algo menos.
 Sin embargo, la diferencia general respecto a P-02 no resulta demasiado clara. Aunque el tiempo es ligeramente inferior, no se puede afirmar que esta configuración sea mejor, ya que el coche también presenta desviaciones importantes.
 
-**P-04 — Velocidad 7, Kp = 0.01**
+**P-04 - Velocidad 7, Kp = 0.01**
 Se prueba una velocidad superior, utilizando una ganancia proporcional de 0.01.
 En este caso, el coche se sale en la primera curva, prácticamente siguiendo una trayectoria recta y sin corregir lo suficiente para mantenerse sobre la línea.
 Esta configuración no permite completar el circuito.
 
-**P-05 — Velocidad 6, Kp = 0.01**
+**P-05 - Velocidad 6, Kp = 0.01**
 Se reduce la velocidad a 6, manteniendo la ganancia proporcional de la prueba anterior.
 El coche consigue completar el circuito en 96 segundos, siendo el mejor tiempo obtenido hasta el momento con el controlador P.
 Sin embargo, se observan oscilaciones muy grandes, incluso en las rectas. El coche corrige continuamente su dirección y se mueve bastante de un lado a otro de la carretera.
