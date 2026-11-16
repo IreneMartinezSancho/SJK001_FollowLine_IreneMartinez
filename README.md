@@ -354,15 +354,14 @@ El coche presenta menos oscilaciones que en PD-02, pero continúa siendo menos e
 
 ![PD-03 - Captura 2](imgPD/pd03-01.png)
 
-#### PD-04 — Velocidad 6, Kp = 0.01, Kd = 0.035
+#### PD-04 - Velocidad 6, Kp = 0.01, Kd = 0.035
 Se prueba una ganancia derivativa inferior a 0.05, pero las oscilaciones vuelven a aumentar. El tiempo registrado es de 97,16 segundos.
 
 ![PD-04 - Captura 1](imgPD/pd04-00.png)
 
 ![PD-04 - Captura 2](imgPD/pd04-01.png)
 
-#### PD-05 — Velocidad 7, Kp = 0.01, Kd = 0.05
-
+#### PD-05 - Velocidad 7, Kp = 0.01, Kd = 0.05
 En esta última configuración se consigue el mejor tiempo del controlador PD, con 85,65 segundos. El coche completa el circuito, aunque con mayores oscilaciones que a velocidad 6.
 
 ![PD-05 - Captura 1](imgPD/pd05-00.png)
