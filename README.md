@@ -413,8 +413,8 @@ Posteriormente, durante los ajustes de la configuración rápida, también se re
 También se realizaron dos comprobaciones adicionales con velocidad 10 y diferentes ganancias derivativas:
 | Configuración adicional | Kd | Resultado |
 |---|---:|---|
-| Velocidad 10, Kp = 0.01, Ki = 0.0001 | 0.2 | No completa el circuito |
-| Velocidad 10, Kp = 0.01, Ki = 0.0001 | 0.4 | 57,92 s, oscilaciones elevadas |
+| Velocidad 10, Kp = 0.01, Ki = 0.0001 | 0.02 | No completa el circuito |
+| Velocidad 10, Kp = 0.01, Ki = 0.0001 | 0.04 | 57,92 s, oscilaciones elevadas |
 
 Estas pruebas adicionales permiten observar cómo cambia el comportamiento del coche cuando se modifica la parte derivativa.
 
