@@ -461,24 +461,24 @@ Como resultado, se mantienen dos configuraciones de referencia: una que prioriza
 ### 6.4. Capturas de las pruebas
 A continuación se muestran las capturas realizadas durante las pruebas del controlador PID. Estas imágenes sirven para documentar las configuraciones utilizadas y los resultados obtenidos.
 
-#### PID-00 — Velocidad 6: configuración estable
+#### PID-00 - Velocidad 6: configuración estable
 En esta primera prueba, el coche completa el circuito en 90,43 segundos, siguiendo la línea roja con bastante precisión y prácticamente sin oscilaciones.
 
 ![PID-00 - Configuración estable](imgsPID/pid00.png)
 
-#### PID-01 — Velocidad 8: configuración intermedia
+#### PID-01 - Velocidad 8: configuración intermedia
 
 Al aumentar la velocidad hasta 8, el tiempo se reduce a 64,86 segundos, aunque el coche comienza a realizar más correcciones laterales.
 
 ![PID-01 - Configuración intermedia](imgsPID/pid01.png)
 
-#### PID-02 — Velocidad 10: configuración rápida
+#### PID-02 - Velocidad 10: configuración rápida
 
 Esta configuración permite completar el circuito en 53,46 segundos, aunque con oscilaciones mucho más pronunciadas. Durante la optimización también se consiguió registrar una vuelta de 52,86 segundos.
 
 ![PID-02 - Configuración rápida](imgsPID/pid02.png)
 
-#### Ajuste adicional — Kd = 0.4
+#### Ajuste adicional - Kd = 0.4
 En esta prueba se modifica la ganancia derivativa para intentar reducir las oscilaciones a velocidad 10.
 El coche completa el recorrido en 57,92 segundos, pero continúa mostrando un comportamiento bastante inestable.
 
